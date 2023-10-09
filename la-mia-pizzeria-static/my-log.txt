@@ -4,3 +4,17 @@
 09-10-2023 14:47:21 LOG: L'utente è arrivato sulla pagina Pizza > Index
 09-10-2023 14:51:16 LOG: L'utente è arrivato sulla pagina Pizza > Details
 09-10-2023 14:51:17 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:05:20 LOG: L'utente è arrivato sulla pagina Home > Index
+09-10-2023 15:06:51 LOG: L'utente è arrivato sulla pagina Home > Index
+09-10-2023 15:06:56 LOG: L'utente è arrivato sulla pagina Home > Index
+09-10-2023 15:11:49 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:11:51 LOG: L'utente è arrivato sulla pagina Home > UtenteIndex
+09-10-2023 15:11:52 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:11:53 LOG: L'utente è arrivato sulla pagina Pizza > Details
+09-10-2023 15:11:55 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:16:49 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:29:49 LOG: L'utente è arrivato sulla pagina Home > Index
+09-10-2023 15:30:34 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:44:07 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:44:59 LOG: L'utente è arrivato sulla pagina Pizza > Index
+09-10-2023 15:47:58 LOG: L'utente è arrivato sulla pagina Home > Index
