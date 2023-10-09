@@ -1,0 +1,33 @@
+﻿@model List<Pizza>
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = "Home";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/IndexStyle.css" />
+}
+
+<!-- Pagina di benvenuto(HOME) -->
+<div class="container h-100">
+    <div class="row h-100">
+        <div class="col-6 h-100 d-flex justify-content-center flex-column">
+            <h1> Benvenuti nella mia pizzeria </h1>
+            <p class="text-white fst-italic"> Sfoglia le nostre pizze per scoprire quella piu adatta a te!</p>
+            <div>
+                <!-- Pulsante che mi porta alla lista delle pizze -->
+                <a class="btn btn-primary d-inline-block" href="@Url.Action("Index", "Pizza")">
+                    Sfoglia le nostre pizze
+                    <i class="fa-solid fa-right-long"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 h-100 d-flex align-items-center justify-content-center">
+            <img class="img-fluid rounded-3" src="~/img/pizza-home.png" alt="Foto pizza">
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,54 @@
+﻿/* CSS RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    height: 100vh;
+}
+
+/* HEADER */
+header {
+    height: 100px;
+    background-color: #1d1d1d;
+}
+
+    header .nav-item {
+        padding: 1rem;
+    }
+
+        header .nav-item .nav-link {
+            color: white;
+        }
+
+        header .nav-item:hover .nav-link {
+            color: #f3a446;
+        }
+
+/* MAIN */
+main {
+    height: calc(100% - 150px);
+    overflow-y: scroll;
+    background-image: url(/img/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+    main::-webkit-scrollbar {
+        display: none;
+    }
+
+/* FOOTER */
+footer {
+    height: 50px;
+    background-color: #1d1d1d;
+}
+
+    footer small {
+        letter-spacing: .2rem;
+    }
+

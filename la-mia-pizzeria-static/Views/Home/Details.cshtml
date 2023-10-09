@@ -1,0 +1,65 @@
+﻿@using la_mia_pizzeria_static.Models.Database_Models;
+@model Pizza
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = $"Dettaglio {Model.Name}";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/DetailsStyle.css" />
+}
+
+<div class="container">
+    <h1 class="text-center"> Dettaglio Pizza </h1>
+    <!-- Visualizzo il nome della pizza -->
+    <h4 class="text-white"> @Model.Name </h4>
+    <div>
+        <!-- Visualizzo gli ingredienti delle pizze se ci sono -->
+        @if (Model.Ingredients != null && Model.Ingredients.Count > 0)
+        {
+            @foreach (Ingredient ingredient in Model.Ingredients)
+            {
+                <span class="badge rounded-pill bg-info text-dark">@ingredient.Title</span>
+            }
+        }
+        else
+        {
+            <small class="text-white"> Nessun ingrediente associato!</small>
+        }
+    </div>
+    <!-- Visualizzo il prezzo della pizza -->
+    <div class="text-white py-2">
+        Prezzo: 
+        <span class="text-success fw-bolder"> € @Model.Price </span>
+    </div>
+    <div class="text-white py-2">
+        <!-- Visualizzo la categoria delle pizze se presente -->
+        Categoria:
+        @if (Model.Category != null)
+        {
+            <span>@Model.Category.Title</span>
+        }
+        else
+        {
+            <span>Nessuna categoria associata</span>
+        }
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <!-- Visualizzo l'immagine della pizza -->
+            <img class="img-thumbnail" src="@Model.Image" alt="@Model.Name">
+        </div>
+        <div class="col-6">
+            <!-- Visualizzo la descrizione della pizza -->
+            <p class="text-white"> @Model.Description </p>
+        </div>
+    </div>
+    <!-- Pulsante che mi ritorna alla lista di carte delle pizze -->
+    <a class="btn btn-secondary btn-sm my-3" href="@Url.Action("UtenteIndex", "Home")">
+        <i class="fa-solid fa-left-long"></i>
+        Torna alla lista
+    </a>
+</div>

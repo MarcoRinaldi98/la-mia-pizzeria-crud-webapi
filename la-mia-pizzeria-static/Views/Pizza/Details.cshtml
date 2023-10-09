@@ -1,0 +1,105 @@
+﻿@using la_mia_pizzeria_static.Models.Database_Models;
+@model Pizza
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = $"Dettaglio {Model.Name}";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/DetailsStyle.css" />
+}
+
+<div class="container">
+    <h1 class="text-center"> Dettaglio Pizza </h1>
+    <!-- Visualizzo il nome della pizza -->
+    <h4 class="text-white"> @Model.Name </h4>
+    <div>
+        <!-- Visualizzo gli ingredienti delle pizze se ci sono -->
+        @if (Model.Ingredients != null && Model.Ingredients.Count > 0)
+        {
+            @foreach (Ingredient ingredient in Model.Ingredients)
+            {
+                <span class="badge rounded-pill bg-info text-dark">@ingredient.Title</span>
+            }
+        }
+        else
+        {
+            <small class="text-white"> Nessun ingrediente associato!</small>
+        }
+    </div>
+    <div class="text-white">
+        <!-- Visualizzo il prezzo della pizza -->
+        Prezzo: 
+        <span class="text-success fw-bolder"> € @Model.Price </span>
+    </div>
+    <div class="text-white py-2">
+        <!-- Visualizzo la categoria delle pizze se presente -->
+        Categoria:
+        @if (Model.Category != null)
+        {
+            <span>@Model.Category.Title</span>
+        }
+        else
+        {
+            <span>Nessuna categoria associata</span>
+        }
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <!-- Visualizzo l'immagine della pizza -->
+            <img class="img-thumbnail" src="@Model.Image" alt="@Model.Name">
+        </div>
+        <div class="col-6">
+            <!-- Visualizzo la descrizione della pizza -->
+            <p class="text-white"> @Model.Description </p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Pulsante che mi ritorna alla lista di carte delle pizze -->
+        <a class="btn btn-secondary btn-sm my-3" href="@Url.Action("Index", "Pizza")">
+            <i class="fa-solid fa-left-long"></i>
+            Torna alla lista
+        </a>
+        @if (User.IsInRole("ADMIN"))
+        {
+            <div class="d-flex">
+                <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della pizza -->
+                <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Pizza", new { id = Model.Id })">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della pizza -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione pizza</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-black">
+                                Vuoi eliminare la pizza?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                <!-- FORM di ELIMINAZIONE della pizza -->
+                                <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger">
+                                        Elimina
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

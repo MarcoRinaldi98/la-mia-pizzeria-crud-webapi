@@ -1,0 +1,75 @@
+﻿@model PizzaFormModel
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = "Creazione Nuova Pizza";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/CreateStyle.css" />
+}
+
+<div class="container">
+    <div class="row py-3">
+        <div class="col-12">
+            <h1 class="text-center pb-3">Pagina creazione nuova pizza</h1>
+        </div>
+        <!-- Creo il FORM di CREAZIONE della pizza -->
+        <form asp-controller="Pizza" asp-action="Create" method="post">
+            <!-- AntiForgeryToken per evitare attacchi di tipo Cross-Site request forgery sui post dei form -->
+            @Html.AntiForgeryToken()
+            <!-- Inserimento dell'immagine -->
+            <div class="mb-3">
+                <strong class="text-white">URL Immagine:</strong>
+                <input type="text" class="form-control" asp-for="Pizza.Image" />
+                <span asp-validation-for="Pizza.Image" class="text-danger"></span>
+            </div>
+            <!-- Inserimento del nome -->
+            <div class="mb-3">
+                <strong class="text-white">Nome:</strong>
+                <input type="text" class="form-control" asp-for="Pizza.Name" />
+                <span asp-validation-for="Pizza.Name" class="text-danger"></span>
+            </div>
+            <!-- Inserimento della descrizione -->
+            <div class="mb-3">
+                <strong class="text-white">Descrizione:</strong>
+                <textarea class="form-control" asp-for="Pizza.Description"></textarea>
+                <span asp-validation-for="Pizza.Description" class="text-danger"></span>
+            </div>
+            <!-- Inserimento del prezzo -->
+            <div class="mb-3">
+                <strong class="text-white">Prezzo:</strong>
+                <input class="d-block w-100" asp-for="Pizza.Price" />
+                <span asp-validation-for="Pizza.Price" class="text-danger"></span>
+            </div>
+            <!-- Inserimento della cartegoria -->
+            <div class="mb-3">
+                <strong class="text-white">Categoria:</strong>
+                <select asp-for="Pizza.CategoryId" rows="10" class="form-select">
+                    <option value="">Seleziona la categoria...</option>
+                    @foreach (Category category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Title</option>
+                    }
+                </select>
+            </div>
+            <!-- Inserimento degli ingredienti -->
+            <div class="mb-3">
+                <strong class="text-white">Seleziona gli Ingredienti:</strong>
+                <select asp-for="SelectedIngredientsId"
+                        multiple="multiple"
+                        size="10"
+                        class="form-control mb-2 mr-sm-2 ml-sm-3 leftList"
+                        asp-items="@Model.Ingredients">
+                </select>
+            </div>
+            
+            <!-- Pulsante di invio del FORM -->
+            <button type="submit" class="btn btn-primary"> CREA PIZZA </button>
+            <!-- Pulsante di annullamento e ritorno alla lista -->
+            <a class="btn btn-danger" href="@Url.Action("Index", "Pizza")"> ANNULLA </a>
+        </form>
+    </div>
+</div>
