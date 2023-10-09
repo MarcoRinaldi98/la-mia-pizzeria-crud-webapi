@@ -77,7 +77,7 @@ namespace la_mia_pizzeria_static.Controllers.API
         }
 
         [HttpPut("{id}")]
-        public IActionResult Modify(int id, [FromBody] Pizza updatedPizza)
+        public IActionResult Modify(int id, [FromBody] PizzaFormModel updatedPizza)
         {
             bool result = _repoPizzas.ModifyPizza(id, updatedPizza);
 

@@ -8,7 +8,7 @@ namespace la_mia_pizzeria_static.Database
         public List<Pizza> GetPizzasByTitle(string title);
         public Pizza GetPizzaById(int id);
         public bool AddPizza(Pizza pizzaToAdd);
-        public bool ModifyPizza(int id, Pizza updatedPizza);
+        public bool ModifyPizza(int id, PizzaFormModel updatedPizza);
         public bool DeletePizza(int id);
     }
 }
