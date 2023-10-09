@@ -69,6 +69,8 @@ namespace la_mia_pizzeria_static.Database
                 pizzaToUpdate.Price = updatedPizza.Pizza.Price;
                 pizzaToUpdate.CategoryId = updatedPizza.Pizza.CategoryId;
 
+                updatedPizza.AddIngredientsToPizza(pizzaToUpdate, _db);
+
                 if (updatedPizza.SelectedIngredientsId != null)
                 {
                     foreach (string ingredientSelectedId in updatedPizza.SelectedIngredientsId)
