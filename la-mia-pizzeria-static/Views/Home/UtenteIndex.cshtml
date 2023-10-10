@@ -1,6 +1,4 @@
-﻿@using la_mia_pizzeria_static.Models.Database_Models;
-@model List<Pizza>
-@{
+﻿@{
     // specifico quale layout dovra essere utilizzato per questa vista
     Layout = "_Layout";
     // Titolo personalizzato di questa vista
@@ -13,58 +11,93 @@
 }
 
 <div class="container">
-    <h1 class="text-center py-3"> Le Nostre Pizze </h1>
-    @if (Model.Count() == 0)
-    {
-        <div class="text-white"> Non ci sono pizze attualmente </div>
-    } else
-    {
-        <div class="row text-center">
-            <!-- Creo la CARD che visualizzera i dati della pizza -->
-            @foreach (Pizza pizza in Model)
-            {
-                <div class="col-4 mb-4">
-                    <div class="card text-white bg-dark border-white">
-                        <!-- Visualizzo l'immagine della pizza -->
-                        <img class="card-img-top imh-thumbnail" src="@pizza.Image" alt="Pizza Margherita">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <!-- Visualizzo il nome della pizza -->
-                                <h5 class="card-title">@pizza.Name</h5>
-                                <!-- Visualizzo il prezzo della pizza -->
-                                <small class="text-success fw-bold"> €@pizza.Price </small>
-                            </div>
-                            <div class="fst-italic">
-                                <!-- Visualizzo la categoria delle pizze se presente -->
-                                @if (pizza.Category != null)
-                                {
-                                    <span>@pizza.Category.Title</span>
-                                }
-                            </div>
-                            <div class="pb-2">
-                                <!-- Visualizzo gli ingredienti delle pizze se -->
-                                @if (pizza.Ingredients != null)
-                                {
-                                    @foreach (Ingredient ingredient in pizza.Ingredients)
-                                    {
-                                        <span class="badge rounded-pill bg-info text-dark">@ingredient.Title</span>
-                                    }
-                                }
-                                else
-                                {
-                                    <small class="fst-italic text-white">Nessun ingrediente associato</small>
-                                }
-                            </div>
-                            <!-- Visualizzo la descrizione della pizza -->
-                            <p class="card-text text-truncate"> @pizza.Description </p>
-                            <div>
-                                <!-- Pulsante che mi reindirizza alla pagina di DETTAGLIO della pizza -->
-                                <a class="btn btn-primary" href="@Url.Action("Details", "Home", new {id = pizza.Id})">Visualizza Dettagli</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
+    <div class="row">
+        <h1 class="text-center pt-4">Lista Delle Pizze</h1>
+        <div class="col-4">
+            <div>
+                <input id="js_search_box" type="text" class="form-control my-3" placeholder="Cerca per nome...">
+            </div>
         </div>
-    }
+    </div>
+
+    <div id="loading-spinner" class="row text-center py-5">
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+            <div class="spinner-border text-light" role="status">
+            </div>
+            <span class="text-white">Caricando le pizze...</span>
+        </div>
+    </div>
+
+    <div id="row-no-pizze" class="row d-none">
+        <div class="col-12">
+            Nessuna pizza trovata!
+        </div>
+    </div>
+
+    <div id="list-of-pizze" class="row d-none">
+    </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        loadPizze();
+
+        document.getElementById("js_search_box").addEventListener('keyup', searchPizze);
+
+        function searchPizze() {
+            let searchString = document.getElementById("js_search_box").value;
+
+            loadPizze(searchString);
+        }
+
+        function loadPizze(searchParam) {
+            axios.get('/api/Pizzas/SearchPizzas', {
+                params: {
+                    search: searchParam
+                }
+            }).then((res) => {
+
+                console.log(res);
+
+                let divNoPizze = document.getElementById("div-no-pizze");
+                let loadingSpinnerElement = document.getElementById("loading-spinner");
+                let listOfPizzeElement = document.getElementById("list-of-pizze");
+
+                if (res.data.length == 0) {
+
+                    divNoPizze.classList.remove("d-none");
+                    loadingSpinnerElement.classList.add("d-none");
+
+                } else {
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOfPizzeElement.classList.remove("d-none");
+
+                    listOfPizzeElement.innerHTML = "";
+                    res.data.forEach(pizza => {
+                        console.log(pizza);
+
+                        listOfPizzeElement.innerHTML +=
+                            `
+                            <div class="col-4 mb-4">
+                                <div class="card text-white bg-dark border-white h-100">
+                                    <!-- Visualizzo l'immagine della pizza -->
+                                                    <img class="card-img-top imh-thumbnail" src="${pizza.image}" alt="${pizza.name}">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <!-- Visualizzo il nome della pizza -->
+                                            <h5 class="card-title">${pizza.name}</h5>
+                                            <!-- Visualizzo il prezzo della pizza -->
+                                            <small class="text-success fw-bold"> €${pizza.price} </small>
+                                        </div>
+                                        <!-- Visualizzo la descrizione della pizza -->
+                                        <p class="card-text text-truncate"> ${pizza.description} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            `});
+                }
+            })
+        }
+    </script>
+}
